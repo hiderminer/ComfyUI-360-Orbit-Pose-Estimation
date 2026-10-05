@@ -1,0 +1,151 @@
+{
+  "Orbit360PoseEstimation": {
+    "display_name": "360-Orbit Pose Estimation",
+    "description": "Estimates a still person's 3D joints from a 360° orbit video and saves them as XYZ pose JSON. images are OpenPose-style skeletons of the corrected pose, one per frame used (connect them to a video node); rotated_images show the pose after pose_rotation.",
+    "inputs": {
+      "images": {
+        "name": "images",
+        "tooltip": "The 360° orbit video frames."
+      },
+      "video": {
+        "name": "video",
+        "tooltip": "A VIDEO (e.g. Create Video / Load Video). Used when images is not connected."
+      },
+      "keypoints": {
+        "name": "keypoints",
+        "tooltip": "Keypoints for all frames from any estimator. Used instead of the video inputs."
+      },
+      "ckpt_name": {
+        "name": "ckpt_name",
+        "tooltip": "SDPose model (checkpoints folder). Used when images or video is connected."
+      },
+      "batch_size": {
+        "name": "batch_size",
+        "tooltip": "Frames per SDPose pass. Keep it small (1) to avoid running out of GPU memory."
+      },
+      "frame_count": {
+        "name": "frame_count",
+        "tooltip": "Frames used for the estimate, evenly spaced over one full turn."
+      },
+      "direction": {
+        "name": "direction",
+        "tooltip": "Camera rotation seen from above. auto picks the direction that puts the nose and knees in front of the body. A wrong direction mirrors front/back (the editor's flip button fixes it).",
+        "options": {
+          "auto": "auto-detect",
+          "ccw": "counterclockwise (ccw)",
+          "cw": "clockwise (cw)"
+        }
+      },
+      "start_angle": {
+        "name": "start_angle",
+        "tooltip": "Camera azimuth of the first frame in degrees. 0 = the first frame sees the person's front."
+      },
+      "score_threshold": {
+        "name": "score_threshold",
+        "tooltip": "A joint with a lower score counts as not detected."
+      },
+      "min_valid_ratio": {
+        "name": "min_valid_ratio",
+        "tooltip": "A frame whose ratio of detected joints is at or below this is ignored."
+      },
+      "save_name": {
+        "name": "save_name",
+        "tooltip": "Where to save, relative to the output folder; a 6-digit number is added (pose-data_000001.json, then _000002 ...)."
+      },
+      "save_file": {
+        "name": "save_file",
+        "tooltip": "Save the XYZ JSON to a file."
+      },
+      "pose_rotation": {
+        "name": "pose_rotation",
+        "tooltip": "Rotate the estimated pose counterclockwise (degrees, as seen from the first frame) to stand up a sideways person, e.g. 270 for a source image rotated 90 degrees left. images is not rotated.",
+        "options": {
+          "0": "0°",
+          "90": "90°",
+          "180": "180°",
+          "270": "270°"
+        }
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "pose_xyz_json",
+        "tooltip": "XYZ pose JSON (the default standing pose when the estimation failed)."
+      },
+      "1": {
+        "name": "images",
+        "tooltip": "OpenPose-style skeleton images of the corrected pose, one per frame used (black when the estimation failed)."
+      },
+      "2": {
+        "name": "rotated_images",
+        "tooltip": "The same skeleton images after pose_rotation."
+      }
+    }
+  },
+  "Orbit360PoseEditor": {
+    "display_name": "360-Orbit XYZ Pose Editor",
+    "description": "Edits XYZ pose data in the free-pose editor. Outputs the edited pose, or the connected xyz_json when nothing was applied in the editor.",
+    "inputs": {
+      "pose_json": {
+        "name": "pose_json"
+      },
+      "xyz_json": {
+        "name": "xyz_json",
+        "tooltip": "XYZ pose JSON from 360-Orbit Pose Estimation. The editor loads it after that node has run."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "xyz_json",
+        "tooltip": "The edited XYZ pose, or the input when nothing was applied in the editor."
+      }
+    }
+  },
+  "HMQwenFreePoseXYZ": {
+    "display_name": "HM Qwen2.1 Free Pose XYZ (beta)",
+    "description": "Qwen Image 2.1 free pose (single person), like Fisher Qwen2.1 Free Pose, with XYZ pose loading in the editor (beta). The mannequin image is image1, the person image is image2 and the prompt is fixed to Draw character from image2.",
+    "inputs": {
+      "clip": {
+        "name": "clip"
+      },
+      "vae": {
+        "name": "vae"
+      },
+      "reference_image": {
+        "name": "reference_image"
+      },
+      "width": {
+        "name": "width"
+      },
+      "height": {
+        "name": "height"
+      },
+      "reference_resolution": {
+        "name": "reference_resolution"
+      },
+      "extra_prompt": {
+        "name": "extra_prompt"
+      },
+      "pose_json": {
+        "name": "pose_json"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "positive"
+      },
+      "1": {
+        "name": "negative"
+      },
+      "2": {
+        "name": "latent"
+      },
+      "3": {
+        "name": "actual_prompt"
+      },
+      "4": {
+        "name": "mannequin_pose_image"
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+# Python caches and temporary files
+__pycache__/
+*.pyc
+*.tmp
+*.log
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Tests and the files they generate (tests/sample_estimate.json is written by test_nodes.py)
+tests/
+
+# Model weights are not distributed: users download them themselves (see the README)
+*.pth
+*.safetensors

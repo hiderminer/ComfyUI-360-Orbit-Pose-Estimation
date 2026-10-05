@@ -1,0 +1,151 @@
+{
+  "Orbit360PoseEstimation": {
+    "display_name": "360-Orbit 姿态估计",
+    "description": "从 360° 环绕视频（相机绕静止人物转一圈的视频）估计人物的 3D 关节，并保存为 XYZ 姿势 JSON。images 是用 OpenPose 风格绘制的修正后姿势的骨架图，每个参与估计的帧一张（可接入视频合成节点）；rotated_images 是经过 pose_rotation 旋转后的姿势图。",
+    "inputs": {
+      "images": {
+        "name": "图像",
+        "tooltip": "360° 环绕视频的帧。"
+      },
+      "video": {
+        "name": "视频",
+        "tooltip": "VIDEO 类型（如 Create Video / Load Video）。未连接 images 时使用。"
+      },
+      "keypoints": {
+        "name": "关键点",
+        "tooltip": "任意估计器输出的全部帧的关键点（POSE_KEYPOINT）。优先于视频输入使用。"
+      },
+      "ckpt_name": {
+        "name": "SDPose 模型",
+        "tooltip": "SDPose 模型（checkpoints 文件夹）。连接 images／video 时使用。"
+      },
+      "batch_size": {
+        "name": "批大小",
+        "tooltip": "SDPose 每次处理的帧数。为避免显存不足，请保持较小（1）。"
+      },
+      "frame_count": {
+        "name": "帧数",
+        "tooltip": "用于估计的帧数，在一整圈内等间隔选取。"
+      },
+      "direction": {
+        "name": "环绕方向",
+        "tooltip": "从上方看相机的旋转方向。auto 会选择使鼻子和膝盖位于身体前方的方向。选错会使前后颠倒（可用编辑器的前后翻转按钮修正）。",
+        "options": {
+          "auto": "自动判断 (auto)",
+          "ccw": "逆时针 (ccw)",
+          "cw": "顺时针 (cw)"
+        }
+      },
+      "start_angle": {
+        "name": "起始角度",
+        "tooltip": "第一帧的相机方位角（度）。为 0 时，第一帧看到的是人物正面。"
+      },
+      "score_threshold": {
+        "name": "得分阈值",
+        "tooltip": "得分低于此值的关节视为未检测到。"
+      },
+      "min_valid_ratio": {
+        "name": "有效关节最小比例",
+        "tooltip": "检测到的关节比例不超过此值的帧不参与估计。"
+      },
+      "save_name": {
+        "name": "保存名称",
+        "tooltip": "相对于输出文件夹的保存位置，会加上 6 位编号（pose-data_000001.json，之后是 _000002 …）。"
+      },
+      "save_file": {
+        "name": "保存为文件",
+        "tooltip": "将 XYZ JSON 保存为文件。"
+      },
+      "pose_rotation": {
+        "name": "姿势旋转",
+        "tooltip": "将估计出的姿势按第一帧的视角逆时针旋转（度），用于把横着的人物立起来（原图向左旋转了 90° 时选 270）。images 不会旋转。",
+        "options": {
+          "0": "0°",
+          "90": "90°",
+          "180": "180°",
+          "270": "270°"
+        }
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "XYZ 姿势 JSON",
+        "tooltip": "XYZ 姿势 JSON（估计失败时为默认站姿）。"
+      },
+      "1": {
+        "name": "图像",
+        "tooltip": "用 OpenPose 风格绘制的修正后姿势的骨架图，每个参与估计的帧一张（估计失败时为全黑）。"
+      },
+      "2": {
+        "name": "旋转后的图像",
+        "tooltip": "反映姿势旋转后的骨架图。"
+      }
+    }
+  },
+  "Orbit360PoseEditor": {
+    "display_name": "360-Orbit XYZ 姿势编辑器",
+    "description": "在自由姿势编辑器中编辑 XYZ 姿势数据。输出编辑后的 XYZ（若未在编辑器中应用，则原样输出连接的 xyz_json）。",
+    "inputs": {
+      "pose_json": {
+        "name": "姿势 JSON"
+      },
+      "xyz_json": {
+        "name": "XYZ 姿势 JSON",
+        "tooltip": "360-Orbit 姿态估计输出的 XYZ 姿势 JSON。该节点运行一次后，即可在编辑器中载入。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "XYZ 姿势 JSON",
+        "tooltip": "编辑后的 XYZ 姿势（未在编辑器中应用时为输入原样）。"
+      }
+    }
+  },
+  "HMQwenFreePoseXYZ": {
+    "display_name": "HM Qwen2.1 自由姿势 XYZ (beta)",
+    "description": "Qwen Image 2.1 自由姿势（单人）。在 Fisher Qwen2.1 自由姿势的基础上，增加了在编辑器中载入 XYZ 姿势的功能（测试版）。人偶图为 image1，人物图为 image2，提示词固定为 Draw character from image2。",
+    "inputs": {
+      "clip": {
+        "name": "CLIP"
+      },
+      "vae": {
+        "name": "VAE"
+      },
+      "reference_image": {
+        "name": "人物图"
+      },
+      "width": {
+        "name": "宽"
+      },
+      "height": {
+        "name": "高"
+      },
+      "reference_resolution": {
+        "name": "参考图分辨率"
+      },
+      "extra_prompt": {
+        "name": "补充提示词"
+      },
+      "pose_json": {
+        "name": "姿势 JSON"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "正向条件"
+      },
+      "1": {
+        "name": "负向条件"
+      },
+      "2": {
+        "name": "潜空间"
+      },
+      "3": {
+        "name": "实际提示词"
+      },
+      "4": {
+        "name": "人偶姿势图"
+      }
+    }
+  }
+}

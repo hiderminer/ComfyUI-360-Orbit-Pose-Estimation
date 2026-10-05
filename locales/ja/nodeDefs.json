@@ -1,0 +1,151 @@
+{
+  "Orbit360PoseEstimation": {
+    "display_name": "360-Orbit ポーズ推定",
+    "description": "360° 周回動画（静止した人物の周りをカメラが一周する動画）から、人物の 3D 関節を推定し、XYZ ポーズ JSON として保存します。images は、補正したポーズを OpenPose 風の骨格で描いた画像で、推定に使ったフレームごとに 1 枚です（動画合成ノードにつなげます）。rotated_images は、pose_rotation で回したあとのポーズの画像です。",
+    "inputs": {
+      "images": {
+        "name": "画像",
+        "tooltip": "360° 周回動画のフレーム。"
+      },
+      "video": {
+        "name": "動画",
+        "tooltip": "VIDEO 型（Create Video / Load Video など）。images が未接続のときに使います。"
+      },
+      "keypoints": {
+        "name": "キーポイント",
+        "tooltip": "任意の推定器が出した、全フレームのキーポイント（POSE_KEYPOINT）。動画の入力より優先して使います。"
+      },
+      "ckpt_name": {
+        "name": "SDPose モデル",
+        "tooltip": "SDPose のモデル（checkpoints フォルダ）。images／video を接続したときに使います。"
+      },
+      "batch_size": {
+        "name": "バッチサイズ",
+        "tooltip": "SDPose で 1 回に処理するフレーム数。GPU メモリ不足を避けるため、小さく（1）しておきます。"
+      },
+      "frame_count": {
+        "name": "フレーム数",
+        "tooltip": "推定に使うフレーム数。1 周を等間隔に分けて選びます。"
+      },
+      "direction": {
+        "name": "周回方向",
+        "tooltip": "上から見たカメラの回る向き。auto は、鼻と膝が体の前にくる向きを選びます。間違えると前後が反転します（エディタの前後反転ボタンで直せます）。",
+        "options": {
+          "auto": "自動判定 (auto)",
+          "ccw": "反時計回り (ccw)",
+          "cw": "時計回り (cw)"
+        }
+      },
+      "start_angle": {
+        "name": "開始角度",
+        "tooltip": "最初のフレームのカメラの方位角（度）。0 のとき、最初のフレームは人物の正面を見ています。"
+      },
+      "score_threshold": {
+        "name": "スコアのしきい値",
+        "tooltip": "これより低いスコアの関節は、検出できなかったものとして扱います。"
+      },
+      "min_valid_ratio": {
+        "name": "有効関節の最小割合",
+        "tooltip": "検出できた関節の割合がこの値以下のフレームは、推定に使いません。"
+      },
+      "save_name": {
+        "name": "保存名",
+        "tooltip": "出力フォルダからの相対パスで指定する保存先。6 桁の番号が付きます（pose-data_000001.json、次は _000002 …）。"
+      },
+      "save_file": {
+        "name": "ファイルに保存",
+        "tooltip": "XYZ JSON をファイルに保存します。"
+      },
+      "pose_rotation": {
+        "name": "ポーズの回転",
+        "tooltip": "推定したポーズを、最初のフレームから見て反時計回りに回します（度）。横向きの人物を立たせるときに使います（元画像を左に 90° 回していた場合は 270）。images は回しません。",
+        "options": {
+          "0": "0°",
+          "90": "90°",
+          "180": "180°",
+          "270": "270°"
+        }
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "XYZ ポーズ JSON",
+        "tooltip": "XYZ ポーズ JSON（推定に失敗したときは標準の立ちポーズ）。"
+      },
+      "1": {
+        "name": "画像",
+        "tooltip": "補正したポーズを OpenPose 風に描いた骨格画像。推定に使ったフレームごとに 1 枚（推定に失敗したときは真っ黒）。"
+      },
+      "2": {
+        "name": "回転後の画像",
+        "tooltip": "ポーズの回転を反映した骨格画像。"
+      }
+    }
+  },
+  "Orbit360PoseEditor": {
+    "display_name": "360-Orbit XYZ ポーズエディタ",
+    "description": "XYZ ポーズデータを、自由ポーズエディタで編集します。編集した XYZ を出力します（エディタで適用していないときは、接続した xyz_json をそのまま出力します）。",
+    "inputs": {
+      "pose_json": {
+        "name": "ポーズ JSON"
+      },
+      "xyz_json": {
+        "name": "XYZ ポーズ JSON",
+        "tooltip": "360-Orbit ポーズ推定が出した XYZ ポーズ JSON。そのノードを一度実行したあと、エディタで読み込めます。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "XYZ ポーズ JSON",
+        "tooltip": "編集後の XYZ ポーズ（エディタで適用していないときは入力のまま）。"
+      }
+    }
+  },
+  "HMQwenFreePoseXYZ": {
+    "display_name": "HM Qwen2.1 自由ポーズ XYZ (beta)",
+    "description": "Qwen Image 2.1 の自由ポーズ（1 人）。Fisher Qwen2.1 自由ポーズと同じ動作に、エディタでの XYZ ポーズの読み込みを加えたものです（ベータ版）。マネキン画像は image1、人物画像は image2 で、プロンプトは Draw character from image2 に固定されます。",
+    "inputs": {
+      "clip": {
+        "name": "CLIP"
+      },
+      "vae": {
+        "name": "VAE"
+      },
+      "reference_image": {
+        "name": "人物画像"
+      },
+      "width": {
+        "name": "幅"
+      },
+      "height": {
+        "name": "高さ"
+      },
+      "reference_resolution": {
+        "name": "参照画像の解像度"
+      },
+      "extra_prompt": {
+        "name": "追加プロンプト"
+      },
+      "pose_json": {
+        "name": "ポーズ JSON"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "ポジティブ"
+      },
+      "1": {
+        "name": "ネガティブ"
+      },
+      "2": {
+        "name": "潜在"
+      },
+      "3": {
+        "name": "実際のプロンプト"
+      },
+      "4": {
+        "name": "マネキンのポーズ画像"
+      }
+    }
+  }
+}
