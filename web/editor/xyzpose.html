@@ -1,5 +1,22 @@
 <!doctype html>
-<html lang="zh-CN" data-i18n-title="xyz.title"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>360-Orbit · XYZ Pose Editor</title><link rel="icon" href="data:,"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="xyzpose.css"></head>
+<html lang="zh-CN" data-i18n-title="xyz.title"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>360-Orbit · XYZ Pose Editor</title><link rel="icon" href="data:,">
+<script>
+// VERSION in ../orbit_pose_editor.js arrives as ?v=: every file of the editor gets it, so an update is not served from the browser cache.
+const version = new URLSearchParams(location.search).get('v');
+const query = version ? '?v=' + encodeURIComponent(version) : '';
+for (const name of ['style.css', 'xyzpose.css']) {
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = name + query;
+    document.head.append(link);
+}
+// The same for the modules: an import map points each editor module at its versioned URL (before the first module loads).
+const modules = ['xyzpose.mjs', 'xyz-pose.mjs', 'i18n.mjs', 'i18n/en.mjs', 'i18n/ja.mjs', 'i18n/zh.mjs'].map(name => new URL(name, location.href).href);
+const importMap = document.createElement('script');
+importMap.type = 'importmap';
+importMap.textContent = JSON.stringify({ imports: Object.fromEntries(modules.map(url => [url, url + query])) });
+document.head.append(importMap);
+</script></head>
 <body>
 <header class="appbar"><div class="brand"><span class="brand-icon">⌘</span><b>360-Orbit</b><span class="divider"></span><span data-i18n="xyz.brand">XYZ pose editor</span><small data-i18n="xyz.brandSub">Single person · VNCCS mannequin</small></div><div class="header-actions"><span id="save-status" data-i18n="common.editThenApply">编辑后应用到节点</span><button id="undo" title="撤销 Ctrl+Z" data-i18n-title="common.undoTitle" data-i18n="common.undo">↶ 撤销</button><button id="redo" title="重做 Ctrl+Shift+Z" data-i18n-title="common.redoTitle">↷</button><button id="cancel-editor" data-i18n="common.cancel">取消</button><button class="primary" id="apply-editor" disabled data-i18n="common.apply">应用到节点</button></div></header>
 <main class="fp-main">
@@ -66,4 +83,4 @@
 
 </aside></main>
 <footer class="app-footer"><span>360-Orbit Pose Estimation <span class="footer-dot">/</span> XYZ Pose Editor · based on the Fisher Pose free-pose editor · mannequin core © MiuProject (MIT)</span></footer>
-<script type="module" src="xyzpose.mjs?v=20261004"></script></body></html>
+<script type="module">import './xyzpose.mjs';</script></body></html>

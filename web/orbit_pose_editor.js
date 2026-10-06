@@ -5,7 +5,7 @@ import { api } from "../../scripts/api.js";
 import { resolveLang, translate } from "./editor/i18n.mjs";
 
 const EDITOR_URL = new URL("./editor/xyzpose.html", import.meta.url);
-const VERSION = "20261005";
+const VERSION = "20261007";   // raise it whenever a file of the editor (web/editor/) changes: it versions all of them, see xyzpose.html
 // fields: node widgets exchanged with the editor; the first one holds the editor state. mode "qwen" adds the extra prompt
 // and the person image to the editor. image: the node input whose upstream picture the editor shows.
 const NODES = {
