@@ -4,7 +4,7 @@
 
 [![360-Orbit Pose Estimation のデモ（クリックで動画全体を開く）](assets/pose-estimation-360-orbit-preview.gif)](assets/pose-estimation-360-orbit-sample.mp4)
 
-*アニメーションをクリックすると、動画全体（mp4、音声付き）が開きます。*
+*アニメーションをクリックすると、動画全体（mp4）が開きます。*
 
 ## 概要
 
@@ -133,6 +133,7 @@ MiniMax-H3-360-ORBIT ワークフローについては、[MiniMax-H3-360-Orbit-L
 
 - **出力**: `xyz_json` のみ。エディタで適用していれば編集後のポーズ、していなければ、接続した `xyz_json` 入力をそのまま出します（どちらもなければエラー）。
 - **入力**: `xyz_json`（省略可）。接続した推定ノードを一度実行したあと、エディタで読み込めます。
+- **サンプルポーズ**: `defaults/` に 100 件のサンプル（`pNN-xyz.json` とサムネイルの `pNN-xyz.png`）を同梱しています。エディタの左側の「サンプルポーズ」に、サムネイルの一覧が出て、クリックで読み込めます（読み取り専用）。
 
 ### HM Qwen2.1 自由ポーズ XYZ (beta) – `HMQwenFreePoseXYZ`
 
@@ -195,3 +196,4 @@ XYZ ポーズエディタと Qwen ノードで共通です。
 - `web/vnccs/`: VNCCS Pose Studio のコア（MiuProject、MIT）、MakeHuman のボディパック（CC0）、three.js（MIT）。ComfyUI-Fisher-Pose に同梱されているものを、そのままコピーしています。各フォルダのライセンスファイルを参照してください。
 - `web/editor/xyzpose.*`、`style.css`、`i18n*`: ComfyUI-Fisher-Pose（Work-Fisher、MIT）の自由ポーズエディタを元に、XYZ の読み込み・前後反転・回転・保存ができるように変えたものです。
 - `assets/`: デモ動画、そこから作ったプレビューの GIF、サンプル画像は、AI で生成したもので、著作権フリーです（CC0 1.0 Universal。公開している人（メンテナ）が持つ権利についての表明です）。
+- `defaults/`: サンプルポーズ（ポーズデータとサムネイル）は、無償で使えます。商用の作品の制作に使うこともできます。ただし、商用のソフトウェアへの同梱や、データそのものの商用目的での再配布は禁止です（[defaults/LICENSE.md](defaults/LICENSE.md)）。

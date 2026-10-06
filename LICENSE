@@ -24,3 +24,6 @@ SOFTWARE.
 Third-party components keep their own licenses (details: THIRD_PARTY_NOTICES.md):
 - web/vnccs/            VNCCS Utils (MIT, (c) 2025 MiuProject), MakeHuman body pack (CC0 1.0), three.js (MIT)
 - assets/               the demo video, the preview GIF made from it and the sample image: made with AI, free of copyright claims (CC0 1.0 Universal)
+
+The sample poses in defaults/ (pose data and thumbnails) are not covered by the MIT License above: free to use, including for
+commercial works, but not to be distributed commercially. See defaults/LICENSE.md.

@@ -323,6 +323,8 @@ export default {
     'xyz.loadUpstream': "接続したノードの XYZ を読み込む",
     'xyz.openFile': "ファイルを開く…",
     'xyz.noFiles': "output/orbit_pose に XYZ ファイルがまだありません。360-Orbit Pose Estimation ノードを実行するか、ファイルを開いてください。",
+    'xyz.samplesHeading': "サンプルポーズ",
+    'xyz.samplesCount': "{n} 件",
     'xyz.saveXyz': "XYZ JSON を保存",
     'xyz.downloadXyz': "ダウンロード…",
     'xyz.namePrompt': "XYZ JSON のファイル名を入力してください",

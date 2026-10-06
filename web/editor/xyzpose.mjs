@@ -417,6 +417,44 @@ $('#download-xyz').onclick = () => {
 // --- 我的姿势: whole editor states saved on the server (see saved_poses.py) ---
 
 const SAVED_URL = '/orbit360/saved_poses';
+// Sample poses shipped with the package (defaults/pNN-xyz.json + thumbnail); shown only when the ComfyUI server answers.
+const SAMPLES_URL = '/orbit360/default_poses';
+let samplePoses = [];
+
+function renderSamples() {
+    $('#sample-section').hidden = !samplePoses.length;
+    $('#sample-count').textContent = samplePoses.length ? t('xyz.samplesCount', { n: samplePoses.length }) : '';
+    $('#sample-poses').replaceChildren(...samplePoses.map(entry => {
+        const button = document.createElement('button');
+        button.className = 'fp-thumb' + (doc.xyz?.name === entry.name ? ' active' : '');
+        button.title = `${entry.name}
+${t('fp.clickToLoad')}`;
+        button.innerHTML = '<img alt="" loading="lazy"><span></span>';
+        button.querySelector('img').src = entry.thumbnail;
+        button.querySelector('span').textContent = entry.name;
+        button.onclick = async () => {
+            if (!confirmDiscard('xyz.unsavedConfirm', savedSignature)) return;
+            try {
+                const response = await fetch(`${SAMPLES_URL}/${encodeURIComponent(entry.name)}`, { cache: 'no-store' });
+                if (!response.ok) throw Error(String(response.status));
+                viewer.recordState();
+                loadXyzText(await response.text(), entry.name);
+                renderSamples();
+                renderXyzFiles();
+            } catch (error) { toast(t('xyz.loadFailed', { name: entry.name, error: error.message })); }
+        };
+        return button;
+    }));
+}
+
+async function loadSampleList() {
+    try {
+        const response = await fetch(SAMPLES_URL, { cache: 'no-store' });
+        if (response.ok) samplePoses = (await response.json()).poses;
+    } catch { /* standalone preview without the ComfyUI server */ }
+    renderSamples();
+}
+
 let savedPoses = [];
 let savedAvailable = false;
 let activeSavedName = null;
@@ -766,6 +804,7 @@ async function start(payload) {
     else fitFrame(true);
     refreshFlips();
     void loadXyzList();
+    void loadSampleList();
     void loadSavedList();
     await viewer.waitForCaptureReady();
     $('#loading').hidden = true;

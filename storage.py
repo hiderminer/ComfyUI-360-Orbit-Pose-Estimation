@@ -1,6 +1,7 @@
 """Local JSON storage for the XYZ pose editor.
 
 - XYZ pose files: ComfyUI/output/orbit_pose/<name>.json (also where the estimation node saves).
+- Sample poses: <this package>/defaults/pNN-xyz.json with a thumbnail pNN-xyz.png next to each (read only).
 - Saved poses ("My Poses"): the same folder and record format as ComfyUI-Fisher-Pose
   (user/default/fisher_pose/poses/<name>.json), so poses saved here also appear in the Fisher editor.
 """
@@ -53,6 +54,19 @@ def list_folders(folder):
     if not os.path.isdir(folder):
         return []
     return sorted((name for name in os.listdir(folder) if safe_name(name) == name and os.path.isdir(os.path.join(folder, name))), key=str.lower)
+
+
+def defaults_folder():
+    return os.path.join(os.path.dirname(os.path.abspath(__file__)), "defaults")
+
+
+def list_defaults(folder):
+    """Names of the sample poses (a .json with a .png thumbnail), in natural order (p2 before p10)."""
+    if not os.path.isdir(folder):
+        return []
+    names = (file_name[:-5] for file_name in os.listdir(folder) if file_name.endswith(".json"))
+    return sorted((name for name in names if safe_name(name) == name and os.path.isfile(os.path.join(folder, name + ".png"))),
+                  key=lambda name: [int(part) if part.isdigit() else part.lower() for part in re.split(r"(\d+)", name)])
 
 
 def poses_folder(user_directory):
@@ -211,6 +225,27 @@ def register_routes():
         if location is None:
             return web.json_response({"error": "Invalid folder"}, status=400)
         return reply(*write_record(location[0], body.get("name"), body["record"], bool(body.get("overwrite"))))
+
+    @routes.get("/orbit360/default_poses")
+    async def get_defaults(request):
+        names = list_defaults(defaults_folder())
+        return web.json_response({"poses": [{"name": name, "thumbnail": f"/orbit360/default_poses/{name}/thumbnail"} for name in names]})
+
+    @routes.get("/orbit360/default_poses/{name}")
+    async def get_default(request):
+        name = request.match_info["name"]
+        try:
+            record = read_record(defaults_folder(), name) if name in list_defaults(defaults_folder()) else None
+        except (OSError, ValueError):
+            record = None
+        return web.json_response(record) if record is not None else web.Response(status=404)
+
+    @routes.get("/orbit360/default_poses/{name}/thumbnail")
+    async def get_default_thumbnail(request):
+        name = request.match_info["name"]
+        if name not in list_defaults(defaults_folder()):
+            return web.Response(status=404)
+        return web.FileResponse(os.path.join(defaults_folder(), name + ".png"), headers={"Cache-Control": "max-age=3600"})
 
     @routes.get("/orbit360/saved_poses")
     async def get_poses(request):

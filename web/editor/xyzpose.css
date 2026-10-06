@@ -60,3 +60,5 @@
 
 .fp-path{font-size:11px;color:#617086;margin:2px 0 6px;word-break:break-all}
 .fp-folder{font-weight:600;background:#f4f6f8}
+.fp-samples .fp-thumb{aspect-ratio:1;border-color:#2c3447}
+.fp-samples .fp-thumb.active{border-color:#6e8cff}

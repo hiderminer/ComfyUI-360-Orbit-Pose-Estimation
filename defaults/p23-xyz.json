@@ -1,0 +1,136 @@
+{
+ "kind": "orbit-pose-xyz",
+ "version": 1,
+ "units": "m",
+ "up": "y",
+ "joints": {
+  "pelvis": [
+   0.0,
+   0.95,
+   0.0
+  ],
+  "head": [
+   -0.11571,
+   1.6779,
+   0.3555
+  ],
+  "neck": [
+   0.05605,
+   1.51046,
+   0.20675
+  ],
+  "right_shoulder": [
+   -0.15723,
+   1.51012,
+   0.19313
+  ],
+  "right_elbow": [
+   -0.11817,
+   1.18735,
+   0.29796
+  ],
+  "right_wrist": [
+   -0.01392,
+   0.88187,
+   0.41987
+  ],
+  "left_shoulder": [
+   0.26976,
+   1.5108,
+   0.22039
+  ],
+  "left_elbow": [
+   0.19585,
+   1.18712,
+   0.28784
+  ],
+  "left_wrist": [
+   0.01902,
+   0.89378,
+   0.41528
+  ],
+  "right_hip": [
+   -0.15427,
+   0.95676,
+   -0.00168
+  ],
+  "right_knee": [
+   -0.30408,
+   1.10411,
+   0.40876
+  ],
+  "right_ankle": [
+   -0.64414,
+   0.81964,
+   0.77491
+  ],
+  "left_hip": [
+   0.15427,
+   0.94324,
+   0.00168
+  ],
+  "left_knee": [
+   0.28709,
+   1.11833,
+   0.39144
+  ],
+  "left_ankle": [
+   0.63356,
+   0.82959,
+   0.7477
+  ]
+ },
+ "confidence": {
+  "head": 1.0,
+  "neck": 1.0,
+  "right_shoulder": 1.0,
+  "right_elbow": 1.0,
+  "right_wrist": 1.0,
+  "left_shoulder": 1.0,
+  "left_elbow": 1.0,
+  "left_wrist": 1.0,
+  "right_hip": 1.0,
+  "right_knee": 1.0,
+  "right_ankle": 1.0,
+  "left_hip": 1.0,
+  "left_knee": 1.0,
+  "left_ankle": 1.0
+ },
+ "meta": {
+  "model": "sdpose_wholebody_fp16.safetensors",
+  "frame_count": 24,
+  "direction": "auto",
+  "direction_used": "cw",
+  "start_angle": 0.0,
+  "score_threshold": 0.3,
+  "min_valid_ratio": 0.6666666666666666,
+  "estimated": true,
+  "error": null,
+  "upright": true,
+  "pose_rotation": 0,
+  "used_frames": 24,
+  "frames": 24,
+  "rms_px": {
+   "head": 7.522,
+   "neck": 2.785,
+   "right_shoulder": 3.565,
+   "right_elbow": 8.795,
+   "right_wrist": 6.304,
+   "left_shoulder": 7.463,
+   "left_elbow": 10.476,
+   "left_wrist": 8.25,
+   "right_hip": 18.656,
+   "right_knee": 3.81,
+   "right_ankle": 26.732,
+   "left_hip": 19.308,
+   "left_knee": 3.906,
+   "left_ankle": 19.81
+  },
+  "mod": {
+   "source": "xyz-23.json",
+   "mirrored_depth": [
+    "body"
+   ]
+  }
+ }
+}

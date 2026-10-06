@@ -1,0 +1,130 @@
+{
+ "kind": "orbit-pose-xyz",
+ "version": 1,
+ "units": "m",
+ "up": "y",
+ "joints": {
+  "pelvis": [
+   0.0,
+   0.95,
+   0.0
+  ],
+  "head": [
+   0.18411,
+   1.74592,
+   -0.00921
+  ],
+  "neck": [
+   0.04281,
+   1.51508,
+   -0.1971
+  ],
+  "right_shoulder": [
+   0.06945,
+   1.53202,
+   0.03186
+  ],
+  "right_elbow": [
+   0.29868,
+   1.20048,
+   -0.07736
+  ],
+  "right_wrist": [
+   0.22956,
+   1.54738,
+   -0.18085
+  ],
+  "left_shoulder": [
+   0.01329,
+   1.49814,
+   -0.42616
+  ],
+  "left_elbow": [
+   0.01528,
+   1.08292,
+   -0.45118
+  ],
+  "left_wrist": [
+   0.04508,
+   0.82541,
+   -0.54191
+  ],
+  "right_hip": [
+   0.05537,
+   1.00298,
+   0.1475
+  ],
+  "right_knee": [
+   0.56975,
+   0.66929,
+   0.08302
+  ],
+  "right_ankle": [
+   0.1234,
+   0.66684,
+   0.56465
+  ],
+  "left_hip": [
+   -0.05537,
+   0.89702,
+   -0.1475
+  ],
+  "left_knee": [
+   0.28752,
+   0.60522,
+   0.43579
+  ],
+  "left_ankle": [
+   -0.20491,
+   0.59039,
+   0.75385
+  ]
+ },
+ "confidence": {
+  "head": 1.0,
+  "neck": 1.0,
+  "right_shoulder": 1.0,
+  "right_elbow": 1.0,
+  "right_wrist": 1.0,
+  "left_shoulder": 1.0,
+  "left_elbow": 1.0,
+  "left_wrist": 1.0,
+  "right_hip": 1.0,
+  "right_knee": 1.0,
+  "right_ankle": 1.0,
+  "left_hip": 1.0,
+  "left_knee": 1.0,
+  "left_ankle": 1.0
+ },
+ "meta": {
+  "model": "sdpose_wholebody_fp16.safetensors",
+  "frame_count": 24,
+  "direction": "auto",
+  "direction_used": "ccw",
+  "start_angle": 0.0,
+  "score_threshold": 0.3,
+  "min_valid_ratio": 0.6666666666666666,
+  "estimated": true,
+  "error": null,
+  "upright": true,
+  "pose_rotation": 0,
+  "used_frames": 24,
+  "frames": 24,
+  "rms_px": {
+   "head": 2.935,
+   "neck": 6.335,
+   "right_shoulder": 8.269,
+   "right_elbow": 13.107,
+   "right_wrist": 4.14,
+   "left_shoulder": 6.287,
+   "left_elbow": 7.443,
+   "left_wrist": 12.254,
+   "right_hip": 14.288,
+   "right_knee": 9.288,
+   "right_ankle": 65.944,
+   "left_hip": 18.048,
+   "left_knee": 48.935,
+   "left_ankle": 19.621
+  }
+ }
+}

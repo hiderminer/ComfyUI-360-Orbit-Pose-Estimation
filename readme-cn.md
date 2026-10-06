@@ -4,7 +4,7 @@
 
 [![360-Orbit Pose Estimation 演示（点击打开完整视频）](assets/pose-estimation-360-orbit-preview.gif)](assets/pose-estimation-360-orbit-sample.mp4)
 
-*点击动画即可打开完整视频（mp4，带声音）。*
+*点击动画即可打开完整视频（mp4）。*
 
 ## 概述
 
@@ -132,6 +132,7 @@
 
 - **输出**：只有 `xyz_json`。在编辑器中应用过则为编辑后的姿势，否则原样输出连接的 `xyz_json` 输入（两者都没有时报错）。
 - **输入**：`xyz_json`（可选）。连接的估计节点运行一次后，即可在编辑器中载入。
+- **示例姿势**：`defaults/` 中附带 100 个示例（`pNN-xyz.json` 和缩略图 `pNN-xyz.png`）。编辑器左侧的“示例姿势”以缩略图列出，点击即可载入（只读）。
 
 ### HM Qwen2.1 自由姿势 XYZ (beta) – `HMQwenFreePoseXYZ`
 
@@ -194,3 +195,4 @@ XYZ 姿势编辑器和 Qwen 节点共用。
 - `web/vnccs/`：VNCCS Pose Studio 核心（MiuProject，MIT）、MakeHuman 人体数据包（CC0）和 three.js（MIT），按 ComfyUI-Fisher-Pose 附带的原样复制。请参阅各文件夹中的许可证文件。
 - `web/editor/xyzpose.*`、`style.css`、`i18n*`：以 ComfyUI-Fisher-Pose（Work-Fisher，MIT）的自由姿势编辑器为基础，改为可载入、翻转、旋转和保存 XYZ 姿势。
 - `assets/`：演示视频、由它制作的预览 GIF 和示例图像均由 AI 生成，不主张著作权（CC0 1.0 Universal；仅涉及维护者自己的权利）。
+- `defaults/`：示例姿势（姿势数据和缩略图）可免费使用，也可用于制作商业作品。但禁止商业分发：不得随附于商业软件，也不得以商业目的再分发数据本身（[defaults/LICENSE.md](defaults/LICENSE.md)）。

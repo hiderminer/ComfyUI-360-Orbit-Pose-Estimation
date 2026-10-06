@@ -323,6 +323,8 @@ export default {
     'xyz.loadUpstream': "载入已连接节点的 XYZ",
     'xyz.openFile': "打开文件…",
     'xyz.noFiles': "output/orbit_pose 中还没有 XYZ 文件。请运行 360-Orbit Pose Estimation 节点或打开文件。",
+    'xyz.samplesHeading': "示例姿势",
+    'xyz.samplesCount': "{n} 个",
     'xyz.saveXyz': "保存 XYZ JSON",
     'xyz.downloadXyz': "下载…",
     'xyz.namePrompt': "请输入 XYZ JSON 的文件名",

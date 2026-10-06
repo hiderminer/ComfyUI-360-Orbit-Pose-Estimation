@@ -323,6 +323,8 @@ export default {
     'xyz.loadUpstream': "Load the XYZ from the connected node",
     'xyz.openFile': "Open a file…",
     'xyz.noFiles': "No XYZ files yet in output/orbit_pose. Run the 360-Orbit Pose Estimation node, or open a file.",
+    'xyz.samplesHeading': "Sample poses",
+    'xyz.samplesCount': "{n} samples",
     'xyz.saveXyz': "Save XYZ JSON",
     'xyz.downloadXyz': "Download…",
     'xyz.namePrompt': "File name for the XYZ JSON",

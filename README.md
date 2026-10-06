@@ -4,7 +4,7 @@
 
 [![360-Orbit Pose Estimation demo (click to open the full video)](assets/pose-estimation-360-orbit-preview.gif)](assets/pose-estimation-360-orbit-sample.mp4)
 
-*Click the animation to open the full video (mp4, with sound).*
+*Click the animation to open the full video (mp4).*
 
 ## Overview
 
@@ -132,6 +132,7 @@ Opens the mannequin editor with the **Open XYZ pose editor** button. **Apply to 
 
 - **Output:** `xyz_json` only: the edited pose if you applied it in the editor, otherwise the connected `xyz_json` input (an error if neither exists).
 - **Input:** `xyz_json` (optional). The editor can load it after the connected estimation node has run.
+- **Sample poses:** `defaults/` holds 100 samples (`pNN-xyz.json` with a thumbnail `pNN-xyz.png`). The editor lists them with thumbnails under "Sample poses" in the left panel; click one to load it (read only).
 
 ### HM Qwen2.1 Free Pose XYZ (beta) – `HMQwenFreePoseXYZ`
 
@@ -194,3 +195,4 @@ The code of this project (© 2026 AI Bard Guild; contact: @IsekaiBardGuild; GitH
 - `web/vnccs/`: VNCCS Pose Studio core (MiuProject, MIT), MakeHuman body pack (CC0) and three.js (MIT), copied as they are bundled with ComfyUI-Fisher-Pose. See the license files in each folder.
 - `web/editor/xyzpose.*`, `style.css`, `i18n*`: derived from the free-pose editor of ComfyUI-Fisher-Pose (Work-Fisher, MIT), changed to load, flip, rotate and save XYZ poses.
 - `assets/`: the demo video, the preview GIF made from it and the sample image were generated with AI and are free of copyright claims (CC0 1.0 Universal; this covers the maintainer's rights only).
+- `defaults/`: the sample poses (pose data and thumbnails) are free to use, including for making commercial works. Commercial distribution is not allowed: bundling them with commercial software, or redistributing the data itself for commercial purposes ([defaults/LICENSE.md](defaults/LICENSE.md)).
